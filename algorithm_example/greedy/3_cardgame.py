@@ -6,6 +6,9 @@
 # 4 1 4
 # 2 2 2  출력 2
 
+
+
+# 교재 풀이
 n,m=map(int, input().split())
 
 result=0

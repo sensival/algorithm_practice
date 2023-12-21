@@ -3,6 +3,8 @@
 # M을 K+1로 나눈 몫이 수열(6+6+6+5)의 반복횟수
 # 가장 큰수가 더해지는 횟수 int(M/(k+1))*K + M%(K+1)
 
+
+# 교재 풀이
 n,m,k=map(int, input().split())
 data=list(map(int, input().split()))
 
