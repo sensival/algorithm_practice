@@ -13,7 +13,7 @@ def binary_search(array, target, start, end):
         return binary_search(array, target, mid+1, end)
     
 # 원소의 개수 n, 찾고자하는 문자열 target
-n, target = list(map(int, input.split()))
+n, target = list(map(int, input().split()))
 array = list(map(int, input().split()))
 
 result = binary_search(array, target, 0, n-1)
