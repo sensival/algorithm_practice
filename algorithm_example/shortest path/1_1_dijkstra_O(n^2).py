@@ -1,9 +1,25 @@
+# 입력 예시
+# 6 11
+# 1
+# 1 2 2
+# 1 3 5
+# 1 4 1
+# 2 3 3
+# 2 4 2
+# 3 2 2
+# 3 6 5
+# 4 3 3
+# 4 5 1
+# 5 3 1
+# 5 6 2
+
 import sys
 
-input = sys.stdin.readline()
+input = sys.stdin.readline# 괄호 노노
 INF = int(1e9) # 10억
 
-n, m = map(int, input().split()) 
+n, m = map(int, input().split())
+
 start = int(input())
 
 graph = [[] for i in range(n+1)]
@@ -12,9 +28,11 @@ visited = [False] * (n + 1)
 
 distance = [INF] * (n + 1)
 
+print(graph)
+
 for _ in range(m):
     a, b, c = map(int, input().split())
-    graph[a].append(b, c)
+    graph[a].append((b, c))
 
 
 def get_smallest_node():
