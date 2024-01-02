@@ -8,12 +8,26 @@ result = 0
 
 for i in range(len(s)):
     print(int(s[i]))
-    if s[i] == '0' or s[i] == '1' or result == 0 :
+    if s[i] == '0' or s[i] == '1' or result == 0 or result == 1:
         result = result + int(s[i])
         print('if문: ', result)
     else:
         result = result * int(s[i])
         print('else문: ', result)
+
+print(result)
+
+
+# 교재 풀이
+data = input()
+result = data[0]
+
+for i in range(1, len(data)):
+    num = int(data[i])
+    if num <= 1 or result <= 1 :
+        result += num
+    else:
+        result *= num
 
 print(result)
 
