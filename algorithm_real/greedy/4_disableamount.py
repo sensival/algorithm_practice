@@ -37,7 +37,7 @@ print(result)
 '''
 
 # 교재 풀이
-n = int(input())
+n = int(input()) 
 data = list(map(int, input().split()))
 data.sort()
 
