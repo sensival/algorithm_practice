@@ -23,14 +23,14 @@ def solution(s):
     for step in range(1, (len(s)//2)+1):
         string_now = ''
         queue = deque()
-
+        count = 1
         for i in range(0, len(s), step):
             if not queue:
                 for index in range(i, min(i + step, len(s))): 
                     queue.append(s[index])
             else:
                 current = []
-                count = 1
+                
                 for index in range(i, min(i + step, len(s))):
                     current.append(s[index])
                     compare = "".join(current)
@@ -38,9 +38,11 @@ def solution(s):
                 if "".join(queue) == compare:
                     count += 1
                 else:
-                    string_now += str(count) + compare if count > 1 else compare
+                    string_now += (str(count) if count > 1 else '')
                     while queue:
-                        queue.popleft()
+                        string_now += queue.popleft()
+                    for index in range(i, min(i + step, len(s))): 
+                         queue.append(s[index])
 
         string_list.append(len(string_now))
 
