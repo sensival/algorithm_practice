@@ -12,46 +12,63 @@ def solution(s):
     answer = 0
     return answer
 '''
-
 # 나의 풀이
 from collections import deque
 
 def solution(s):
     answer = 0
     string_list = []
+    length = len(s)
 
-    for step in range(1, (len(s)//2)+1):
+    def push_str(q, s, start, end):
+        for index in range(start, end): 
+            q.append(s[index])
+        return q
+
+    def pop_str(q,count):
+        str_q = ''
+        str_q += (str(count) if count > 1 else '')
+        while q:
+            str_q += q.popleft()
+        return str_q
+    
+    def slice_str(s, start, end):
+        current = s[start:end]
+        return current
+        
+    for step in range(1, (length//2)+1): # 간격 1 ~ 문자열 길이 절반 이하까지만
         string_now = ''
         queue = deque()
         count = 1
-        for i in range(0, len(s), step):
-            if not queue:
-                for index in range(i, min(i + step, len(s))): 
-                    queue.append(s[index])
+        queue = push_str(queue, s, 0, step)
+        for i in range(step, length, step): # 큐에 하나씩 넣어서 비교
+            compare = slice_str(s, i, min(i + step, length))
+            # print("step",step, "i:",i,"--->", compare)
+
+            if i + step < length and "".join(queue) == compare:
+                count += 1
+
+            elif i + step < length and "".join(queue) != compare:
+                string_now += pop_str(queue, count)
+                queue = push_str(queue, s, i, i + step)
+                count = 1
+                # print("strnow_step",step, "i:",i,"--->", string_now)
+
             else:
-                current = []
-                
-                for index in range(i, min(i + step, len(s))):
-                    current.append(s[index])
-                    compare = "".join(current)
+                # print("마지막")
+                string_now += (pop_str(queue, count+1) if "".join(queue) == compare else pop_str(queue, count) + compare)
 
-                if "".join(queue) == compare:
-                    count += 1
-                else:
-                    string_now += (str(count) if count > 1 else '')
-                    while queue:
-                        string_now += queue.popleft()
-                    for index in range(i, min(i + step, len(s))): 
-                         queue.append(s[index])
-
+        # print(string_now)
         string_list.append(len(string_now))
-
+                
     answer = min(string_list)
 
     return answer
 
 s = input()
 print(solution(s))
+
+
 
 '''
 # 내 코드 GPT가 수정한거??? 다른사람거 뱉은듯?
@@ -83,3 +100,25 @@ def solution(s):
 s = input()
 print(solution(s))
 '''
+
+# 교재 풀이
+def solution(s):
+    answer = len(s)
+    for step in range(1,len(s)//2+1):
+        compressed = ""
+        prev = s[0:step]
+        count = 1
+
+        for j in range(step, len(s), step):
+            if prev ==s[j:j+step]:
+                count +=1
+            
+            else:
+                compressed += str(count) + prev if count >= 2 else prev
+                prev = s[j:j+step]
+                count = 1
+
+        compressed += str(count) + prev if count>= 2 else prev
+        answer = min(answer, len(compressed))
+    return answer
+        
