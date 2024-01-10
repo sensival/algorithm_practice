@@ -12,11 +12,12 @@ def solution(s):
     answer = 0
     return answer
 '''
+
 # 나의 풀이
 from collections import deque
 
 def solution(s):
-    answer = 0
+    answer =  len(s)
     string_list = []
     length = len(s)
 
@@ -60,8 +61,7 @@ def solution(s):
 
         # print(string_now)
         string_list.append(len(string_now))
-                
-    answer = min(string_list)
+        answer = min(string_list)
 
     return answer
 
@@ -101,6 +101,7 @@ s = input()
 print(solution(s))
 '''
 
+'''
 # 교재 풀이
 def solution(s):
     answer = len(s)
@@ -121,4 +122,7 @@ def solution(s):
         compressed += str(count) + prev if count>= 2 else prev
         answer = min(answer, len(compressed))
     return answer
-        
+
+s = input()
+print(solution(s))
+'''
