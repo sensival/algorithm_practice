@@ -14,6 +14,7 @@ def solution(key, lock):
     return answer
 '''
 '''
+# 나의 풀이 ---> 3일 고민했으나 fail
 import numpy as np
 def solution(key, lock):
     answer = True
@@ -37,46 +38,89 @@ def solution(key, lock):
     
     def shift_key(key):
 
-    
-    
 
     if lock_count > key_count:
         return False
     
     else:
-        
-    
-
-
-
-
-        
-    
     
     return answer
 '''
+# 교재 풀이
+def rotate_a_matrix_by_90_degree(a):
+    n = len(a) # 행
+    m = len(a[0]) # 열
+    result =[[0] * n for _ in range(m)] # 행 열이 바뀐 갯수로 해야함
+    for i in range(n):
+        for j in range(m):
+            result[j][n-i-1] = a[i][j]  # index 열->행 되고  index 행 크기에서 행index-1 -> 열 
+    return result
+
+def check(new_lock):
+    lock_length = len(new_lock)//3
+    for i in range(lock_length, lock_length * 2): # 3배로 변경했으니 인덱스는 자물쇠 크기 ~ 자물쇠 크기 * 2
+        for j in range(lock_length, lock_length * 2):
+            if new_lock[i][j] != 1:
+                return False
+    return True
+                
+            
 def solution(key, lock):
-    answer = True
-    
-    return answer
-
-
-def input_integer_list():
-    try:
-        input_str = input()
-        # 문자열을 파이썬 리스트로 변환
-        nested_list = eval(input_str)
+    n = len(lock)
+    m = len(key)
+    # 자물쇠를 기존의 3배 크기로 변경
+    new_lock = [[0]*(n * 3) for _ in range(n * 3)]
+    for i in range(n):
+        for j in range(m):
+            new_lock[i + n][j + n] = lock[i][j]
         
-        # 리스트 내의 모든 요소를 정수로 변환
-        int_nested_list = [[int(element) for element in sublist] for sublist in nested_list]
+    for rotation in range(4):
+        key = rotate_a_matrix_by_90_degree(key)
+        for x in range(n * 2):
+            for y in range(n * 2):
+                # 열쇠 끼우기
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x + i][y + j] += key[i][j]
+                if check(new_lock) == True:
+                    return True
+                # 열쇠 빼기
+                for i in range(m):
+                    for j in range(m):
+                        new_lock[x + i][y + j] -= key[i][j]
+                    
+    return False
 
-        return int_nested_list
 
-    except (ValueError, SyntaxError) as e:
-        print("올바른 형식으로 입력하세요.")
+def convert_to_integer_list(matrix):
+    try:
+        result = [[int(element) for element in row] for row in matrix]
+        return result
+    except ValueError as e:
+        print(f"Error: {e}. Please make sure the input contains only integers.")
         return None
 
 
-key = input_integer_list()
-lock = input_integer_list()
+
+import ast
+
+def input_matrix_from_terminal():
+    try:
+        input_str = input()
+        matrix = ast.literal_eval(input_str)
+        
+        # Validate the input to ensure it's a 2D list
+        if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+            raise ValueError("Invalid input. Please enter a valid 2D list.")
+
+        # Convert elements to integers
+        result = [[int(element) for element in row] for row in matrix]
+        return result
+    except (ValueError, SyntaxError) as e:
+        print(f"Error: {e}. Please enter a valid 2D list.")
+        return None
+    
+key = input_matrix_from_terminal()
+lock = input_matrix_from_terminal()
+print(solution(key, lock))
 
