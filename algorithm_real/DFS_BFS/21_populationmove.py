@@ -79,8 +79,60 @@ for _ in range(n):
 dx = [-1, 0, 1, 0]
 dy = [0, -1, 0, 1]
 
-result = 0
+result = 0 # 왜 있는지 모르겠음
 
 def process(x, y, index):
+    united = []
+    united.append((x, y))
+    q = deque()
+    q.append((x, y))
+    # 연합 번호 매기기 -> 인구이동이 가능한 그룹끼리
+    union[x][y] = index
+
+    summary = graph[x][y]
+    count = 1
+
+    while q:
+        x, y = q.popleft()
+
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < n and 0 <= ny < n and union[nx][ny] == -1:
+                if l <= abs(graph[nx][ny]-graph[x][y]) <= r:
+                    q.append((nx, ny))
+                    union[nx][ny] = index
+                    summary += graph[nx][ny]
+                    count += 1
+                    united.append((nx, ny))
+
+
+    for i, j in united:
+        graph[i][j] = summary // count
+    
+
+    return count
+
+total_count = 0
+
+while True:
+    union = [[-1] * n for _ in range(n)]
+    index = 0
+    # 하루동안 생길수 있는 연합과 이동 탐색
+    for i in range(n):
+        for j in range(n):
+            if union[i][j] == -1:
+                process(i, j, index)
+                index += 1
+    
+    # union[i][j] 가 모두 -1이면 아무런 연합도 생기지 않았다는 뜻 그래서 index가 n*n이 됨
+    if index == n * n:
+        break
+    
+    # 하루가 지났으므로 +1
+    total_count += 1
+
+
+print(total_count)
     
 
