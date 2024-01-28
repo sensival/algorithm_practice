@@ -60,15 +60,18 @@ def solution(board):
     pos = {(1, 1), (1, 2)}
     q.append((pos, 0))
     visited.append(pos)
-
+    # 너비 우선 탐색
     while q:
         pos, cost = q.popleft()
+        # 제일 먼저 도착하는 경로 반환
         if (n, n) in pos:
             return cost
 
         for next_pos in get_next_pos(pos, new_board):
             if next_pos not in visited:
+                # 이동가능한 경로 모두 q에 enqueue
                 q.append((next_pos, cost + 1))
+                #  왔던길 되돌아 가지 않게 visited
                 visited.append(next_pos)
 
     
