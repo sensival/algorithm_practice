@@ -43,3 +43,73 @@
 # 모든 사용자가 마지막 스테이지에 있으므로 4번 스테이지의 실패율은 1이며 나머지 스테이지의 실패율은 0이다.
 
 # [4,1,2,3]
+
+def get_integer_list_from_input_with_brackets():
+    while True:
+        try:
+            input_str = input("정수 리스트를 입력하세요 (대괄호 포함): ")
+            
+            # 입력 문자열에서 대괄호 제거 후 공백 제거, 쉼표로 분리하여 정수로 변환
+            integer_list = [int(x) for x in input_str.replace("[", "").replace("]", "").replace(" ", "").split(",")]
+            
+            return integer_list
+        except ValueError:
+            print("올바른 형식으로 입력하세요. 예: [1, 2, 3]")
+
+
+# 나의 풀이
+    
+N = int(input())
+stages = get_integer_list_from_input_with_brackets()
+
+
+now = [0 for _ in range(N + 1)]
+
+for stage in stages:
+    now[stage-1] += 1
+
+total = [0 for _ in range(N)]
+for i in range(N):
+    total[i] += sum(now[i:])
+
+missrate = []
+for i in range(N):
+    try:
+        missrate.append((i+1, now[i]/total[i]))
+    
+    except ZeroDivisionError:
+        missrate.append((i+1, 0))
+
+
+missrate.sort(key= lambda x: x[1], reverse=True)
+
+answer = []
+for miss in missrate:
+    answer.append(miss[0])
+
+print(answer)
+
+
+
+# 교재풀이
+
+def solution(N,stages):
+    answer = []
+    length = len(stages)
+
+    for i in range(1, N + 1):
+        count = stages.count(i)
+
+        if length == 0:
+            fail = 0
+
+        else:
+            fail = count / length
+
+        answer.append((i, fail))
+        length -= count
+
+    answer = sorted(answer, key= lambda t: t[1],reverse=True)
+
+    answer = [i[0] for i in answer]
+    return answer
