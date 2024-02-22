@@ -32,7 +32,7 @@
 # "fro???"는 "frozen"에 매치되므로 1입니다.
 # "pro?"는 매치되는 가사 단어가 없으므로 0 입니다.
 
-import ast
+from bisect import bisect_left, bisect_right
 
 def get_str_list_from_input_with_brackets():
     while True:
@@ -49,4 +49,36 @@ def get_str_list_from_input_with_brackets():
 
 words = get_str_list_from_input_with_brackets()
 queries = get_str_list_from_input_with_brackets()
-print(words)
+print(words[0])
+print(queries)
+
+def count_by_range(a, left_value, right_value):
+    right_index = bisect_right(a, right_value)
+    left_index = bisect_left(a, left_value)
+    return right_index - left_index
+
+array = [[] for _ in range(10001)]
+reverse_array =  [[] for _ in range(10001)]
+
+def solution(words, queries):
+    answer = []
+    for word in words:
+        array[len(word)].append(word)
+        reverse_array[len(word)].append(word[::-1])# word[::-1] 문자열 뒤집기
+
+    for i in range(10001):
+        array[i].sort()
+        reverse_array[i].sort()
+
+    
+    for q in queries:
+        if q[0] != '?':
+            res =  count_by_range(array[len(q)], q.replace('?', 'a'), q.replace('?', 'z'))
+        else:
+            res = count_by_range(reverse_array[len(q)], q[::-1].replace('?', 'a'), q[::-1].replace('?', 'z'))
+
+        answer.append(res)
+
+    return answer
+
+print(solution(words, queries))
