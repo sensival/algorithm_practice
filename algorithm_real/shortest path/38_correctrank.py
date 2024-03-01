@@ -16,3 +16,18 @@
 
 # 출력예시
 # 1
+
+INF = int(1e9) #10억
+
+# 노드 및 간선의 개수
+n, m = map(int, input().split())
+# 2차원 리스트를 만들고 초기화
+graph = [[INF] * (n + 1) for _ in range(n + 1)]
+
+# 자기자신 0으로 초기화
+for a in range(1, n + 1):
+    for b in range(1, n + 1):
+        if a == b:
+            graph[a][b] = 0
+
+# 각 간선의 정보를 입력받아, 그 값으로 초기화
