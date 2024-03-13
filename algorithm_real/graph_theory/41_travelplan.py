@@ -52,7 +52,7 @@ result = True
 
 # 모든 노드의 루트노드가 동일한지 확인
 for i in range(m - 1):
-    if find_parent(parentm plan[i]) != find_parent(parent, plan[i + 1]):
+    if find_parent(parent, plan[i]) != find_parent(parent, plan[i + 1]):
         result = False
 
 if result:
