@@ -23,25 +23,26 @@ for tc in range(int(input())):
         index += m
 
     for j in range(1, m):
-        for i in range(n): # 첫 행~
-            if i == 0:
+        for i in range(n): # 첫 행~n행까지 1열씩 전진
+            if i == 0: #첫 행이면 왼쪽 '위'는 없음
                 left_up = 0
             else:
                 left_up = dp[i - 1][j - 1]
 
-            if i == n -1:
+            if i == n -1: # 마지막행이면 왼쪽 '아래'는 없음
                 left_down = 0
 
             else:
                 left_down = dp[i + 1][j - 1]
             
+            # 어떤 행이 든 바로 왼쪽값은 있음
             left = dp[i][j - 1]
             dp[i][j] = dp[i][j] + max(left_up, left_down, left)
 
     
     result = 0
     for i in range(n):
-        result = max(result, dp[i][m - 1])
+        result = max(result, dp[i][m - 1]) # 마지막 열 값이 젤 높은 곳 어디 
 
     print(result)
             
