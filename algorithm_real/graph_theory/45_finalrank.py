@@ -91,7 +91,6 @@ for tc in range(int(input())):
         # 큐가 비어있으면 사이클이 발생했다는 의미
         if len(q) == 0:
             cycle = True
-            print("싸이클")
             break
 
         # 큐에 원소가 2개면 가능한 정렬결과가 여러개
@@ -110,7 +109,6 @@ for tc in range(int(input())):
                 # 새롭게 진입차수가 0이 되는 노드를 큐에 삽입
                 if indegree[j] == 0:
                     q.append(j)
-                    print("큐")
 
 
 
