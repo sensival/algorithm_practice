@@ -46,6 +46,7 @@ from collections import deque
 # 테스트 케이스만큼 반복
 for tc in range(int(input())):
     n = int(input())
+    # 진입 차수 배열 생성
     indegree = [0] * (n + 1)
     graph = [[False]*(n + 1) for i in range(n + 1)]
     # 작년 순위 입력
