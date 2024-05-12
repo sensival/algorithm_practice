@@ -13,4 +13,4 @@ for i in range(2, int(math.sqrt(n)) + 1):
 
 for i in range(m, n + 1):
     if array[i]:
-        print(i, end=' ')
+        print(i)
